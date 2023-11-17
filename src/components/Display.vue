@@ -1,6 +1,6 @@
 <template>
   <div>
-    <video ref="videoPlayer" width="600" controls @timeupdate="updateProgress">
+    <video ref="videoPlayer" controls @loadedmetadata="loadedmetadata" @timeupdate="updateProgress">
       <source :src="videoSource" type="video/mp4">
       Your browser does not support the video tag.
     </video>
@@ -12,13 +12,11 @@
 </template>
 
 <script>
-
-console.log(this);
 export default {
   props: ['globalData'],
   data() {
     return {
-      videoSource: 'your_video_path.mp4',
+      videoSource: '/video.mp4',
       currentTime: 30, // 设置默认进度为30秒
       duration: 0,
     };
@@ -30,14 +28,14 @@ export default {
     seekTo() {
       this.$refs.videoPlayer.currentTime = this.currentTime;
     },
+    // 监听视频加载完成事件
+    loadedmetadata() {
+      console.log("globalData:", this.globalData);
+      this.$refs.videoPlayer.currentTime = 12;
+    }
   },
   mounted() {
-    console.log(this.globalData);
-    // 监听视频加载完成事件
-    this.$refs.videoPlayer.addEventListener('loadedmetadata', () => {
-      this.duration = this.$refs.videoPlayer.duration;
-      this.$refs.videoPlayer.currentTime = this.currentTime; // 设置默认进度
-    });
+
   },
 };
 </script>
