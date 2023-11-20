@@ -1,68 +1,79 @@
 <template>
-  <div>
-    <div class="container">
-      <h1>this is a Vue3 Component</h1>
-      <div>value from outer globalData.value: {{ value || "no input" }}</div>
-      <input @input="onInput" />
-    </div>
-
-    <video ref="videoPlayer" width="600" controls @timeupdate="updateProgress" @loadedmetadata="loadedmetadata">
-      <source :src="videoSource" type="video/mp4">
+  <div style="width: 100%;padding: 0;margin: 0;">
+    <video ref="videoPlayer" style="width: 100%;margin: 0;padding: 0;" controls @timeupdate="onTimeupdate"
+      @loadedmetadata="onReady">
+      <source style="width: 100%;margin: 0;padding: 0;" :src="videoSource" type="video/mp4">
       Your browser does not support the video tag.
     </video>
-
-    <div>
-      <p>当前播放时间: {{ currentTime }} 秒</p>
-      <input type="range" v-model="currentTime" :max="duration" @input="seekTo">
-    </div>
-
   </div>
 </template>
 
 <script setup lang="ts">
+import zionMdapi from "zion-mdapi";
 import { ref, onMounted, onUnmounted } from 'vue';
+
 const props = defineProps<{
   globalData: Record<string, any>;
   setGlobalData: (newValue: any) => void;
-  value?: string;
+  video_source?: string;
+  url?: string;
+  actionflow_id?: string;
 }>();
+const mdapi = zionMdapi.init({
+  url: props?.url,
+  env: "H5",
+  actionflow_id: props?.actionflow_id,
+})
 const videoPlayer = ref<HTMLVideoElement | null>(null);
-const videoSource = '/video.mp4';
+const videoSource = ref<string>(props.video_source || "");
 const currentTime = ref<number>(0);
-const duration = ref<number>(0);
 
-const onInput = (e: Event) => {
-  props.setGlobalData({
-    ...props.globalData,
-    value: (e.target as HTMLInputElement)?.value,
-  });
+
+// 开始播放
+function toPlay() {
+  if (videoPlayer.value) {
+    videoPlayer.value.play();
+  }
+  console.log("播放");
 }
-const updateProgress = () => {
-  if (videoPlayer.value) {
-    currentTime.value = videoPlayer.value.currentTime;
-  }
-};
 
-const seekTo = () => {
+// 暂停
+function toPause() {
   if (videoPlayer.value) {
-    videoPlayer.value.currentTime = currentTime.value;
-
+    videoPlayer.value.pause();
   }
-};
-
-const loadedmetadata = () => {
-  if (videoPlayer.value) {
-    videoPlayer.value.currentTime = 20;
-  }
+  console.log("暂停");
 }
+
+// 播放结束
+function onEnded() {
+  console.log("播放结束了");
+}
+
+// 播放进度
+function onTimeupdate() {
+  currentTime.value = videoPlayer.value.currentTime;
+  console.log("播放进度上传中");
+}
+
+// 准备好了
+function onReady() {
+  videoPlayer.value.currentTime = 20;
+  console.log("video准备就绪");
+}
+
 
 onMounted(() => {
-
+  document.addEventListener("visibilitychange", (e: any) => {
+    if (e.target.visibilityState == "visible") {
+      toPlay()
+    } else {
+      toPause()
+    }
+  });
 });
 
 onUnmounted(() => {
-  if (videoPlayer.value) {
-    videoPlayer.value.removeEventListener('loadedmetadata', () => { });
-  }
+  document.removeEventListener("visibilitychange", () => { })
 });
 </script>
