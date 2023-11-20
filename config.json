@@ -16,6 +16,10 @@
         {
           "fieldName": "actionflow_id",
           "type": "TEXT"
+        },
+        {
+          "fieldName": "course_pk",
+          "type": "INTEGER"
         }
       ]
     }

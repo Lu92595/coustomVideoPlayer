@@ -14,7 +14,7 @@ const actionflow_id = ref("39b8c22f-5d78-446b-a046-a2967986da5c")
 
 <template>
   <Display :video_source="globalData?.value" :url="url" :actionflow_id="actionflow_id" :global-data="globalData"
-    :set-global-data="setGlobalData" />
+    :set-global-data="setGlobalData" :course_pk="0" />
 </template>
 
 <style scoped></style>

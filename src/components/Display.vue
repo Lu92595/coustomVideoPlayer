@@ -1,7 +1,7 @@
 <template>
   <div style="width: 100%;padding: 0;margin: 0;">
     <video ref="videoPlayer" style="width: 100%;margin: 0;padding: 0;" controls @timeupdate="onTimeupdate"
-      @loadedmetadata="onReady">
+      @loadedmetadata="onReady" @ended="onEnded">
       <source style="width: 100%;margin: 0;padding: 0;" :src="videoSource" type="video/mp4">
       Your browser does not support the video tag.
     </video>
@@ -18,13 +18,14 @@ const props = defineProps<{
   video_source?: string;
   url?: string;
   actionflow_id?: string;
+  course_pk: number;
 }>();
 const mdapi = zionMdapi.init({
   url: props?.url,
   env: "H5",
   actionflow_id: props?.actionflow_id,
 })
-const videoPlayer = ref<HTMLVideoElement | null>(null);
+const videoPlayer = ref<any>(null);
 const videoSource = ref<string>(props.video_source || "");
 const currentTime = ref<number>(0);
 
@@ -48,6 +49,12 @@ function toPause() {
 // 播放结束
 function onEnded() {
   console.log("播放结束了");
+  mdapi.callActionflow({
+    actionflow_name: "视频组件_播放结束",
+    payload: {
+      course_pk: props?.course_pk
+    }
+  })
 }
 
 // 播放进度
