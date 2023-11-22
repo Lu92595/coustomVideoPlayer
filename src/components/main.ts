@@ -1,3 +1,3 @@
-import Display from './Display.vue';
+import VideoPlayer from './VideoPlayer.vue';
 
-export default { Display };
+export default { VideoPlayer };
