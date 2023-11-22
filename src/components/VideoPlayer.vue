@@ -6,7 +6,7 @@
       Your browser does not support the video tag.
     </video> -->
 
-    <div @click="createDemoPlayer">{{ video_source }}</div>
+    <div @click="createDemoPlayer">{{ title }}</div>
     <div ref="playerTemp"></div>
   </div>
 </template>
@@ -65,7 +65,7 @@ function createDemoPlayer(source, cover) {
 }
 
 onMounted(() => {
-console.log(props.video_source);
+  console.log(props.video_source);
 })
 
 
