@@ -20,12 +20,12 @@ export default {
   data() {
     return {
       player: null,
-      title:"视频播放器"
+      title: "视频播放器"
     }
   },
   mounted() {
     console.log("video_source：", this.video_source);
-    this.createDemoPlayer()
+    // this.createDemoPlayer()
   },
   methods: {
     createDemoPlayer(source, cover) {
@@ -55,19 +55,6 @@ export default {
     }
   }
 }
-
-// const script = document.createElement('script');
-// const link = document.createElement('link');
-// link.href = 'https://g.alicdn.com/apsara-media-box/imp-web-player/2.16.3/skins/default/aliplayer-min.css'
-// link.setAttribute('rel', 'stylesheet')
-// script.onload = () => {
-//   console.log('Aliplayer', window.Aliplayer);
-
-// }
-// script.src = 'https://g.alicdn.com/apsara-media-box/imp-web-player/2.16.3/aliplayer-h5-min.js';
-// script.setAttribute('type', 'text/javascript')
-// document.body.appendChild(script);
-// document.body.appendChild(link);
 
 
 // const props = defineProps<{
