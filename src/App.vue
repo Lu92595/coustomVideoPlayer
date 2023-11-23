@@ -18,10 +18,5 @@ const actionflow_id = ref("39b8c22f-5d78-446b-a046-a2967986da5c")
 </template>
 
 <style>
-#app {
-  width: 100%;
-  height: auto;
-  padding: 0;
-  margin: 0;
-}
+
 </style>

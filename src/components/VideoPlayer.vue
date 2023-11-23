@@ -1,118 +1,136 @@
 <template>
   <div>
-    <!-- <video ref="videoPlayer" style="width: 100%;margin: 0;padding: 0;" controls @timeupdate="onTimeupdate"
-      @loadedmetadata="onReady" @ended="onEnded">
-      <source style="width: 100%;margin: 0;padding: 0;" :src="videoSource" type="video/mp4">
-      Your browser does not support the video tag.
-    </video> -->
-
-    <div @click="createDemoPlayer">{{ title }}</div>
-    <div ref="playerTemp"></div>
+    <div @click="createPlayer">{{ player ? "" : title }}</div>
+    <div style="width:100%;height:99.6vh;display: flex;justify-content: center;align-items: center;" id="playerTemp">
+    </div>
   </div>
 </template>
 
-<script setup>
+<script>
 import zionMdapi from "zion-mdapi";
-import "https://g.alicdn.com/apsara-media-box/imp-web-player/2.16.3/aliplayer-h5-min.js"
-import { onMounted, ref } from "vue";
-const props = defineProps({
-  video_source: {
-    type: String,
-    default: ""
-  },
-  url: {
-    type: String,
-    default: ""
-  },
-  actionflow_id: {
-    type: String,
-    default: ""
-  },
-  course_pk: {
-    type: Number,
-    default: 0
-  }
-})
+// import "../assets/aliplayer-h5-min.js";
+import "https://g.alicdn.com/apsara-media-box/imp-web-player/2.16.3/aliplayer-h5-min.js";
 
-let title = ref("视频播放器")
-let player = ref(null);
-let playerTemp = ref(null)
-
-function createDemoPlayer(source, cover) {
-  if (document.getElementById('player-con') === null) {
-    let playerDomWrap = playerTemp?.value;
-    let playerDom = document.createElement('div');
-    playerDom.setAttribute('id', 'player-con');
-    playerDomWrap.appendChild(playerDom);
-  }
-
-  let videoProps = {
-    "id": "player-con",
-    source: "//player.alicdn.com/video/aliyunmedia.mp4",
-    // "width": "100%",
-    // "height": "500px",
-    "autoplay": false,
-    "isLive": false,
-    "rePlay": false,
-    "playsinline": true,
-    "preload": true,
-    "controlBarVisibility": "hover",
-    "useH5Prism": true
-  }
-  if (!player.value) {
-    player.value = new Aliplayer(videoProps);
-  }
-}
-
-onMounted(() => {
-  console.log(props.video_source);
-})
-
-
-
-
-
-// export default {
-//   name: "VideoPlayer",
-//   props: ["video_source", "url", "actionflow_id", "course_pk"],
-//   data() {
-//     return {
-//       player: null,
-//       title: "视频播放器"
-//     }
+import "../assets/aliplayercomponents-1.0.9.min.js";
+// import { onMounted, ref } from "vue";
+// const props = defineProps({
+//   video_source: {
+//     type: String,
+//     default: ""
 //   },
-//   mounted() {
-//     console.log("video_source：", this.video_source);
-//     // this.createDemoPlayer()
+//   url: {
+//     type: String,
+//     default: ""
 //   },
-//   methods: {
-//     createDemoPlayer(source, cover) {
-//       if (document.getElementById('player-con') === null) {
-//         let playerDomWrap = this.$refs.playerTemp;
-//         let playerDom = document.createElement('div');
-//         playerDom.setAttribute('id', 'player-con');
-//         playerDomWrap.appendChild(playerDom);
-//       }
+//   actionflow_id: {
+//     type: String,
+//     default: ""
+//   },
+//   course_pk: {
+//     type: Number,
+//     default: 0
+//   }
+// })
 
-//       let props = {
-//         "id": "player-con",
-//         source: "//player.alicdn.com/video/aliyunmedia.mp4",
-//         // "width": "100%",
-//         // "height": "500px",
-//         "autoplay": false,
-//         "isLive": false,
-//         "rePlay": false,
-//         "playsinline": true,
-//         "preload": true,
-//         "controlBarVisibility": "hover",
-//         "useH5Prism": true
-//       }
-//       if (!this.player) {
-//         this.player = new Aliplayer(props);
-//       }
-//     }
+// let title = ref("视频播放器")
+// let player = ref(null);
+// let playerTemp = ref(null)
+
+// function createPlayer(source, cover) {
+//   if (document.getElementById('player-con') === null) {
+//     let playerDomWrap = playerTemp?.value;
+//     let playerDom = document.createElement('div');
+//     playerDom.setAttribute('id', 'player-con');
+//     playerDomWrap.appendChild(playerDom);
+//   }
+
+//   let videoProps = {
+//     "id": "player-con",
+//     source: props?.video_source || "//player.alicdn.com/video/aliyunmedia.mp4",
+//     // "width": "100%",
+//     "height": "100vh",
+//     "autoplay": false,
+//     "isLive": false,
+//     "rePlay": false,
+//     "playsinline": true,
+//     "preload": true,
+//     "controlBarVisibility": "hover",
+//     "useH5Prism": true
+//   }
+//   if (!player.value) {
+//     player.value = new Aliplayer(videoProps);
 //   }
 // }
+
+// onMounted(() => {
+//   console.log(props.video_source);
+// })
+
+
+
+export default {
+  name: "VideoPlayer",
+  props: ["video_source", "url", "actionflow_id", "course_pk"],
+  data() {
+    return {
+      player: null,
+      title: "视频播放器"
+    }
+  },
+  mounted() {
+    console.log("video_source：", this.video_source);
+    // this.createPlayer()
+  },
+  methods: {
+    createPlayer(source, cover) {
+      if (document.getElementById('player-con') === null) {
+        let playerDomWrap = document.getElementById("playerTemp");
+        let playerDom = document.createElement('div');
+        playerDom.setAttribute('id', 'player-con');
+        playerDomWrap.appendChild(playerDom);
+      }
+
+      let props = {
+        "id": "player-con",
+        language: "zh-cn",
+        cover: '',
+        source: "http://shipin.cdxyhpx.com/sv/3bba3a21-18926843f74/3bba3a21-18926843f74.mp4",
+        // "width": "100%",
+        "height": "100%",
+        textTracks: [{ kind: 'subtitles', label: '英文（美国）', src: '字幕地址', srclang: 'en-US' }],
+        "autoplay": false,
+        "rePlay": false,
+        "playsinline": true,
+        "preload": true,
+        "controlBarVisibility": "hover",
+        "useH5Prism": true,
+        components: [
+          {
+            name: 'BulletScreenComponent',
+            type: AliPlayerComponent.BulletScreenComponent,
+            args: ['欢迎使用阿里播放器', { fontSize: '16px', color: '#00c1de' }, 'random']
+          },
+          {
+            name: 'CaptionComponent',
+            type: AliPlayerComponent.CaptionComponent
+          }]
+      }
+      if (!this.player) {
+        this.player = new Aliplayer(props);
+      }
+
+      //挂载事件
+      this.onReady();
+    },
+    onReady() {
+      this.player.on('ready', (res) => {
+        console.log("ready");
+        this.player.seek(80)
+        this.player.play()
+      });
+    }
+  }
+}
 
 
 // const props = defineProps<{
@@ -210,4 +228,13 @@ onMounted(() => {
 </script>
 <style>
 @import "https://g.alicdn.com/apsara-media-box/imp-web-player/2.16.3/skins/default/aliplayer-min.css";
+/* @import "../assets/aliplayer-min.css"; */
+
+.prism-player {
+  overflow: hidden;
+}
+
+.prism-info-display {
+  box-sizing: border-box;
+}
 </style>
