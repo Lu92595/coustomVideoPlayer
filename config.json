@@ -6,8 +6,16 @@
       "description": "视频课程播放自定义组件",
       "itemInputs": [
         {
-          "fieldName": "video_source",
+          "fieldName": "vid",
           "type": "TEXT"
+        },
+        {
+          "fieldName": "playauth",
+          "type": "TEXT"
+        },
+        {
+          "fieldName": "course_log_pk",
+          "type": "INTEGER"
         },
         {
           "fieldName": "url",
@@ -16,13 +24,9 @@
         {
           "fieldName": "actionflow_id",
           "type": "TEXT"
-        },
-        {
-          "fieldName": "course_pk",
-          "type": "INTEGER"
         }
       ]
     }
   },
-  "version": "0.0.10"
+  "version": "0.0.12"
 }

@@ -13,10 +13,8 @@ const actionflow_id = ref("39b8c22f-5d78-446b-a046-a2967986da5c")
 </script>
 
 <template>
-  <VideoPlayer :video_source="globalData?.value" :url="url" :actionflow_id="actionflow_id" :global-data="globalData"
-    :set-global-data="setGlobalData" :course_pk="0" />
+  <VideoPlayer vid="a175d6b01b4271ee80980764b3ec0102" playauth="" :url="url" :actionflow_id="actionflow_id"
+    :global-data="globalData" :set-global-data="setGlobalData" :course_log_pk="0" />
 </template>
 
-<style>
-
-</style>
+<style></style>
