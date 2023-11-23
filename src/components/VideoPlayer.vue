@@ -9,7 +9,7 @@
 <script>
 import zionMdapi from "zion-mdapi";
 // import "../assets/aliplayer-h5-min.js";
-import "https://g.alicdn.com/apsara-media-box/imp-web-player/2.16.3/aliplayer-h5-min.js";
+import "//g.alicdn.com/apsara-media-box/imp-web-player/2.16.3/aliplayer-h5-min.js";
 
 import "../assets/aliplayercomponents-1.0.9.min.js";
 // import { onMounted, ref } from "vue";
@@ -94,7 +94,7 @@ export default {
         "id": "player-con",
         language: "zh-cn",
         cover: '',
-        source: "http://shipin.cdxyhpx.com/sv/3bba3a21-18926843f74/3bba3a21-18926843f74.mp4",
+        source: "//shipin.cdxyhpx.com/sv/3bba3a21-18926843f74/3bba3a21-18926843f74.mp4",
         // "width": "100%",
         "height": "100%",
         textTracks: [{ kind: 'subtitles', label: '英文（美国）', src: '字幕地址', srclang: 'en-US' }],
@@ -227,7 +227,7 @@ export default {
 // });
 </script>
 <style>
-@import "https://g.alicdn.com/apsara-media-box/imp-web-player/2.16.3/skins/default/aliplayer-min.css";
+@import "//g.alicdn.com/apsara-media-box/imp-web-player/2.16.3/skins/default/aliplayer-min.css";
 /* @import "../assets/aliplayer-min.css"; */
 
 .prism-player {
