@@ -1,6 +1,6 @@
 <template>
   <div style="height: 100%;display: flex;justify-content: center;align-items: center;flex-direction: column;">
-    <!-- <div @click="player ? closePlayer() : openPlayer()">{{ player ? "关闭播放器" : "打开播放器" }}</div> -->
+    <div @click="player ? closePlayer() : openPlayer()">{{ player ? "关闭播放器" : "打开播放器" }}</div>
     <div v-if="player" style="width:100%;flex:1;display: flex;justify-content: center;align-items: center;"
       id="playerTemp">
     </div>
@@ -43,10 +43,12 @@ export default {
         }
       })
       if (status !== "成功") {
-        throw new Error(msg)
+        console.warn("获取视频进度失败", data, msg)
+        //throw new Error(msg)
       }
       const { maxCurrentTime = 0 } = data || {};
       this.maxCurrentTime = maxCurrentTime;
+      return maxCurrentTime;
     },
     async postMaxCurrentTime() {
       const { data, msg, status } = await this.mdapi.callActionflow({
@@ -115,9 +117,10 @@ export default {
 
     },
     onReady() {
-      this.player.on('ready', (res) => {
+      this.player.on('ready', async (res) => {
         console.log("ready");
-        this.player.seek(80)
+        const maxCurrentTime = await this.getLastUpdateTime()
+        this.player.seek(maxCurrentTime)
         this.player.play()
       });
     }
