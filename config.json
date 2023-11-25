@@ -6,6 +6,10 @@
       "description": "视频课程播放自定义组件",
       "itemInputs": [
         {
+          "fieldName": "source",
+          "type": "TEXT"
+        },
+        {
           "fieldName": "vid",
           "type": "TEXT"
         },
@@ -18,6 +22,14 @@
           "type": "INTEGER"
         },
         {
+          "fieldName": "cover",
+          "type": "TEXT"
+        },
+        {
+          "fieldName": "bullet_screen",
+          "type": "TEXT"
+        },
+        {
           "fieldName": "url",
           "type": "TEXT"
         },
@@ -28,5 +40,5 @@
       ]
     }
   },
-  "version": "0.0.12"
+  "version": "0.0.13"
 }
