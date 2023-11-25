@@ -44,20 +44,18 @@ export default {
     }
   },
   methods: {
-    // 获取视频进度
-    async getMaxCurrentTime() {
+    // 获取课程信息
+    async queryCourseLogInfo() {
       const { data, msg, status } = await this.mdapi.callActionflow({
-        actionflow_name: "获取视频进度",
+        actionflow_name: "查询课程记录信息",
         payload: {
           course_log_pk: this.course_log_pk
         }
-      })
+      }).catch(e => { return { data: {}, msg: e?.message || e, status: "失败" } })
       if (status !== "成功") {
         console.error(msg, data)
-        //throw new Error(msg)
       }
       this.maxCurrentTime = data?.max_current_time || 0;
-      return this.maxCurrentTime;
     },
     // 视频进度更新
     async postMaxCurrentTime() {
@@ -84,7 +82,7 @@ export default {
             maxCurrentTime: this.maxCurrentTime,
             duration: this.player.getDuration()
           }
-        })
+        }).catch(e => { return { data: {}, msg: e?.message || e, status: "失败" } })
         if (status !== "成功") {
           console.error(msg, data)
         }
@@ -160,8 +158,8 @@ export default {
     // 播放器准备就绪时
     onReady() {
       this.player.on('ready', async (res) => {
-        const maxCurrentTime = await this.getMaxCurrentTime()
-        this.player.seek(maxCurrentTime)
+        await this.queryCourseLogInfo()
+        this.player.seek(this.maxCurrentTime)
         this.player.play()
       });
     },
